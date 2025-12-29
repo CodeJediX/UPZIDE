@@ -208,44 +208,21 @@
         .faq-item.active .faq-question { color: var(--neon-main); }
 
         /* =========================================
-           UPDATED: THE NEXUS (ATTRACTIVE PORTFOLIO)
+           UPDATED: THE NEXUS (HORIZONTAL SCROLL)
            ========================================= */
-        /* SINGLE ROW SCROLLABLE CONTAINER */
         .filter-controls { 
-            display: flex; 
-            justify-content: flex-start; /* Start from left */
-            gap: 20px; 
-            margin-bottom: 50px; 
-            flex-wrap: nowrap; /* Prevent wrapping to second line */
-            overflow-x: auto; /* Enable scrolling */
-            padding-bottom: 15px; /* Space for scrollbar */
-            
-            /* Hide Scrollbar for clean look */
-            -ms-overflow-style: none; 
-            scrollbar-width: none; 
+            display: flex; justify-content: flex-start; gap: 20px; margin-bottom: 50px; 
+            flex-wrap: nowrap; overflow-x: auto; padding-bottom: 15px;
+            -ms-overflow-style: none; scrollbar-width: none; 
         }
         .filter-controls::-webkit-scrollbar { display: none; }
-
-        /* Center content on larger screens if it fits */
-        @media (min-width: 768px) {
-            .filter-controls { justify-content: center; }
-        }
+        @media (min-width: 768px) { .filter-controls { justify-content: center; } }
 
         .filter-btn {
-            padding: 10px 30px; 
-            border: 1px solid #333; 
-            background: rgba(255,255,255,0.05);
-            color: #aaa; 
-            font-family: var(--font-head); 
-            cursor: pointer; 
-            text-transform: uppercase;
-            letter-spacing: 2px; 
-            transition: 0.4s; 
-            position: relative; 
-            overflow: hidden; 
-            font-size: 0.8rem;
-            flex-shrink: 0; /* Prevent shrinking */
-            white-space: nowrap; /* Keep text single line */
+            padding: 10px 30px; border: 1px solid #333; background: rgba(255,255,255,0.05);
+            color: #aaa; font-family: var(--font-head); cursor: pointer; text-transform: uppercase;
+            letter-spacing: 2px; transition: 0.4s; position: relative; overflow: hidden; font-size: 0.8rem;
+            flex-shrink: 0; white-space: nowrap;
         }
         .filter-btn::before {
             content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%; background: var(--neon-main);
@@ -257,18 +234,31 @@
         }
         .filter-btn:hover::before, .filter-btn.active::before { transform: scaleY(1); }
 
-        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        /* === HORIZONTAL SCROLL CONTAINER === */
+        .portfolio-grid {
+            display: flex; /* Makes items sit in a row */
+            gap: 30px;
+            overflow-x: auto; /* Enables horizontal scrolling */
+            scroll-snap-type: x mandatory; /* Makes cards snap into place */
+            padding-bottom: 30px; /* Space for shadow/interaction */
+            -webkit-overflow-scrolling: touch; /* Smooth scroll on mobile */
+            /* Hide scrollbar */
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
+        }
+        .portfolio-grid::-webkit-scrollbar { display: none; }
         
         .project-card {
-            height: 300px; 
+            flex: 0 0 300px; /* FIXED WIDTH, DON'T SHRINK */
+            height: 350px;
             border: 1px solid #333; background: #050505; position: relative; overflow: hidden;
             transition: 0.4s; cursor: pointer;
+            scroll-snap-align: start; /* Snap alignment */
         }
         .project-card:hover {
             border-color: var(--neon-main); transform: translateY(-5px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
-        /* Tech Corners */
         .project-card::after {
             content: ''; position: absolute; bottom: 0; right: 0; width: 20px; height: 20px;
             border-bottom: 2px solid var(--neon-main); border-right: 2px solid var(--neon-main);
@@ -298,8 +288,6 @@
         .project-info p {
             color: var(--neon-main); font-family: monospace; font-size: 0.9rem; text-transform: uppercase;
         }
-
-        /* END PORTFOLIO UPDATE */
 
         .calc-container { background: #0f0f0f; border: 1px solid #333; padding: 40px; border-radius: 15px; max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
         .calc-row { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding: 15px 0; }
@@ -519,7 +507,7 @@
         <img src="logo.png" alt="UPZIDE" class="hero-logo-img" onerror="this.style.display='none'; document.getElementById('hero-text-fallback').style.display='block';">
         <h1 id="hero-text-fallback" style="display:none; font-size: 8rem; margin:0; line-height:1; font-family: var(--font-head); color: #111; text-shadow: 0 0 5px var(--neon-main);">UPZIDE</h1>
         
-        <div class="glitch" data-text="SOLUTIONS">SOLUTIONS</div>
+        <div class="glitch" data-text="UPZIDE">UPZIDE</div>
         <div class="tagline">Elevate Your Reality. Define Your Digital Future.</div>
         <a href="#portfolio" class="hero-btn">Explore Nexus</a>
     </section>
@@ -562,6 +550,7 @@
             <button class="filter-btn" onclick="filterProjects('design')">Graphic Design</button>
             <button class="filter-btn" onclick="filterProjects('ai')">AI Systems</button>
         </div>
+        
         <div class="portfolio-grid">
             <div class="project-card web">
                 <img src="images/web.png" alt="Project 1">
